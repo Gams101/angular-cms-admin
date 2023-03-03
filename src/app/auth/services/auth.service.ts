@@ -1,20 +1,20 @@
+import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthService {
 
-  fakeUsername: string = "username";
+  fakeEmail: string = "test@test.com";
   fakePassword: string = "password";
 
   constructor() { }
 
-  login(username: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<any> {
     // Mock a successful call to an API server.
-    if (username == this.fakeUsername && password == this.fakePassword) {
+    if (email == this.fakeEmail && password == this.fakePassword) {
       localStorage.setItem("token", "my-super-secret-token-from-server");
       return of(new HttpResponse({ status: 200 }));
     } else {

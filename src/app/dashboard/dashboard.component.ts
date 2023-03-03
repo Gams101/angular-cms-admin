@@ -1,16 +1,24 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../authentication.service';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  template: `
+    <button class="logout" (click)="logout()">Logout</button>
+  `,
+  styles: [`
+    .logout {
+      margin-top: 20px
+    }
+
+    .test {}
+  `]
 })
 export class DashboardComponent {
 
   constructor(
-    private authService: AuthenticationService,
+    private authService: AuthService,
     private router: Router
   ) { }
 

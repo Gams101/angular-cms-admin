@@ -1,9 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationInterceptor } from './authentication.interceptor';
+import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+
+const routes: Routes = [
+  {
+    path: 'login',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+    // canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    // canActivate: [AuthenticationGuard]
+  },
+];
 
 @NgModule({
   declarations: [
@@ -11,9 +24,9 @@ import { AuthenticationInterceptor } from './authentication.interceptor';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    RouterModule.forRoot(routes)
   ],
-  providers: [AuthenticationInterceptor],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,21 +7,21 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class AuthenticationInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    private authService: AuthenticationService,
+    private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       tap(
-        (event) => {},
+        (event) => { },
         (error) => {
           if (error instanceof HttpErrorResponse) {
             switch (error.status) {
