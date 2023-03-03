@@ -7,14 +7,12 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 
 const routes: Routes = [
   {
-    path: 'login',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-    // canActivate: [AuthenticationGuard]
+    path: '',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-    // canActivate: [AuthenticationGuard]
+    path: 'login',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
   },
 ];
 

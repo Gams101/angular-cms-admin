@@ -32,12 +32,12 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginFormComponent {
 
-  @Output() create = new EventEmitter<{ email: string, password: string }>();
+  @Output() login = new EventEmitter<{ email: string, password: string }>();
 
   handleSubmit(form: NgForm) {
 
     if (form.valid) {
-      this.create.emit(form.value);
+      this.login.emit(form.value);
     } else {
       form.form.markAllAsTouched();
     }

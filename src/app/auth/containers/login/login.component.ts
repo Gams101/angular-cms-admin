@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
             Sign in to your account
         </h2>
       </div>
-      <login-form (create)="handleCreate($event)"></login-form>
+      <login-form (login)="handleLogin($event)"></login-form>
     </div>
   `,
   styles: [`
@@ -24,13 +24,19 @@ import { AuthService } from '../../services/auth.service';
     }
   `]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
     private router: Router) { }
 
-  handleCreate(creds: { email: string, password: string }) {
+  ngOnInit(): void {
+    if (this.authService.isUserLoggedIn()) {
+      this.router.navigateByUrl("dashboard");
+    }
+  }
+
+  handleLogin(creds: { email: string, password: string }) {
     this.authService.login(creds.email, creds.password).subscribe(() => this.router.navigateByUrl("/dashboard"));
   }
 
