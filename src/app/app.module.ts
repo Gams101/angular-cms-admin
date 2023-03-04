@@ -1,9 +1,11 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+import { JwtInterceptor } from './auth/interceptors/jwt.interceptor';
 
 const routes: Routes = [
   {
@@ -22,9 +24,10 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthInterceptor],
+  providers: [AuthInterceptor, { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

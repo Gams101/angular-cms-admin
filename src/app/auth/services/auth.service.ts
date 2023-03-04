@@ -1,35 +1,41 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  fakeEmail: string = "test@test.com";
-  fakePassword: string = "password";
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
-
-  login(email: string, password: string): Observable<any> {
-    // Mock a successful call to an API server.
-    if (email == this.fakeEmail && password == this.fakePassword) {
-      localStorage.setItem("token", "my-super-secret-token-from-server");
-      return of(new HttpResponse({ status: 200 }));
-    } else {
-      return of(new HttpResponse({ status: 401 }));
-    }
+  login(email: string, password: string) {
+    return this.http.post<{ access_token: string, token_type: string; }>(`${environment.apiUrl}/login`, { email, password })
+      .pipe(
+        tap(({ access_token, token_type }) => {
+          localStorage.setItem("access_token", access_token)
+          localStorage.setItem("token_type", token_type)
+        })
+      );
   }
 
-  logout(): void {
-    localStorage.removeItem("token");
+  logout() {
+    return this.http.post<{}>(`${environment.apiUrl}/logout`, {}).pipe(
+      tap(() => {
+        localStorage.removeItem("access_token");
+      })
+    );
   }
 
   isUserLoggedIn(): boolean {
-    if (localStorage.getItem("token") != null) {
+    if (localStorage.getItem("access_token") != null) {
       return true;
     }
     return false;
+  }
+
+  getToken() {
+    return localStorage.getItem("access_token");
   }
 }

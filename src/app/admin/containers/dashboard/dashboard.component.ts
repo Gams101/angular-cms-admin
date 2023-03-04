@@ -19,8 +19,9 @@ export class DashboardComponent {
   ) { }
 
   logout(): void {
-    this.authService.logout();
-    this.router.navigateByUrl("/login");
+    this.authService.logout().subscribe(() => {
+      this.router.navigateByUrl("/login");
+    });
   }
 
 }

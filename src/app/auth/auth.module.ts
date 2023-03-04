@@ -4,7 +4,6 @@ import { LoginComponent } from './containers/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 export const routes: Routes = [
   {
@@ -21,7 +20,6 @@ export const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     RouterModule.forChild(routes)
   ]
 })
